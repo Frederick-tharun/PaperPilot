@@ -1,0 +1,23 @@
+# Secrets
+.env
+
+# Data (PDFs and the vector index are rebuilt with the scripts)
+data/papers/*.pdf
+data/chroma/
+data/research/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local Claude Code settings
+.claude/

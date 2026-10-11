@@ -1,0 +1,25 @@
+services:
+  api:
+    build: .
+    env_file: .env
+    environment:
+      # Ollama running on your own computer, seen from inside Docker
+      PP_OLLAMA_URL: ${PP_OLLAMA_URL_DOCKER:-http://host.docker.internal:11434}
+    volumes:
+      - ./data:/app/data          # papers + vector index persist on your disk
+      - hf-cache:/root/.cache     # downloaded embedding models
+    ports:
+      - "8000:8000"
+
+  ui:
+    build: .
+    command: streamlit run app/streamlit_app.py --server.address 0.0.0.0 --server.port 8501
+    environment:
+      PP_API_URL: http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+
+volumes:
+  hf-cache:
